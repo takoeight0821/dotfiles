@@ -1,30 +1,3 @@
-# # Path to your oh-my-zsh installation.
-# export ZSH=/Users/konoyuya/.oh-my-zsh
-
-# # Set name of the theme to load.
-# # Look in ~/.oh-my-zsh/themes/
-# # Optionally, if you set this to "random", it'll load a random theme each
-# # time that oh-my-zsh is loaded.
-# ZSH_THEME="robbyrussell"
-
-# # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# # Example format: plugins=(rails git textmate ruby lighthouse)
-# # Add wisely, as too many plugins slow down shell startup.
-# plugins=(
-#     brew
-#     cabal
-#     colored-man-pages
-#     command-not-found
-#     common-aliases
-#     git
-#     go
-#     lein
-#     osx
-#     stack
-#     web-search
-# )
-
 source ~/.zplug/zplug
 
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -55,12 +28,12 @@ typeset -U path PATH
 
 # User configuration
 path=(
-    $HOME/.rakudobrew/bin
-    $HOME/.rakudobrew/moar-nom/install/share/perl6/site/bin
-    $HOME/.cabal/bin
-    $HOME/.local/bin
-    $HOME/.roswell/bin
-    $(brew --prefix)/{bin,sbin}
+    $HOME/.rakudobrew/bin(N-/)
+    $HOME/.rakudobrew/moar-nom/install/share/perl6/site/bin(N-/)
+    $HOME/.cabal/bin(N-/)
+    $HOME/.local/bin(N-/)
+    $HOME/.roswell/bin(N-/)
+    $(brew --prefix)/{bin,sbin}(N-/)
     $path
 )
 
@@ -74,17 +47,18 @@ if [ -x "`which go`" ]; then
   )
 fi
 
-$HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+if [ -x "`which opam`" ]; then
+    $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+fi
 
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+# autoload -U +X compinit && compinit
+# autoload -U +X bashcompinit && bashcompinit
 
-eval "$(stack --bash-completion-script stack)"
-eval "$(~/.rakudobrew/bin/rakudobrew init -)"
+[ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
+[ -x "`which rakudobrew`" ] && eval "$(~/.rakudobrew/bin/rakudobrew init -)"
 
 alias emacs='emacs -nw'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-source $ZSH/oh-my-zsh.sh
+[ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 
