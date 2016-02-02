@@ -38,7 +38,7 @@ path=(
 )
 
 if [ -x "`which go`" ]; then
-  export GOPATH=$HOME/go
+  export GOPATH=$HOME/.go
   path=(
       $GOROOT/bin(N-/)
       $GOPATH/bin(N-/)

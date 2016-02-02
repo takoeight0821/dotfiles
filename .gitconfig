@@ -1,0 +1,24 @@
+# This is Git's per-user configuration file.
+[core]
+# Please adapt and uncomment the following lines:
+    user = "Kono Yuya"
+    email = "takohati0821@gmail.com"
+    editor = "vim"
+[user]
+	name = Kono Yuya
+	email = takohati0821@gmail.com
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[ghq]
+  root = ~/.ghq
+  root = ~/.go/src
