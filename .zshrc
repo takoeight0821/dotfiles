@@ -29,6 +29,7 @@ typeset -U path PATH
 
 # User configuration
 path=(
+    $HOME/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $(brew --prefix)/{bin,sbin}(N-/)
