@@ -1,5 +1,6 @@
 ;;; -*- coding: utf-8 -*-
-(("/Users/konoyuya/.emacs.d/inits/12_clojure.el" . 289)
+(("/Users/konoyuya/dotfiles/.gitignore" . 54)
+ ("/Users/konoyuya/.emacs.d/inits/12_clojure.el" . 289)
  ("/Users/konoyuya/.emacs.d/elpa/slamhound-20140506.1618/slamhound-autoloads.el" . 405)
  ("/Users/konoyuya/.emacs.d/elpa/ac-cider-20151012.308/ac-cider-autoloads.el" . 1307)
  ("/Users/konoyuya/.emacs.d/elpa/cider-20160214.35/cider-autoloads.el" . 7253)
