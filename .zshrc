@@ -46,12 +46,13 @@ autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
 
-. $HOME/.nix-profile/etc/profile.d/nix.sh
-
 [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin/'
 
 alias emacs='emacs -nw'
 [ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+
+alias ros='rlwrap ros "$@"'
+
 export LESS='-F -g -i -M -R -S -w -X -z-4'
