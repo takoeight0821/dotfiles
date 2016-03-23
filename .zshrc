@@ -32,7 +32,9 @@ path=(
     $HOME/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
-    $(brew --prefix)/{bin,sbin}(N-/)
+    $HOME/.cargo/bin(N-/)
+    $HOME/.ghq/github.com/ternjs/tern/bin(N-/)
+    /usr/local/bin(N-/)
     $path
 )
 
@@ -51,8 +53,15 @@ autoload -U +X bashcompinit && bashcompinit
 alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin/'
 
 alias emacs='emacs -nw'
+alias emacsclient='emacsclient -nw -a ""'
 [ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 
-alias ros='rlwrap ros "$@"'
-
 export LESS='-F -g -i -M -R -S -w -X -z-4'
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+RUST_SRC_PATH="$HOME/rustc-src-1.7.0/src"
+export RUST_SRC_PATH
