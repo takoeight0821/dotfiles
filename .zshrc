@@ -2,7 +2,7 @@ source ~/.zplug/zplug
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
-
+zplug "zsh-users/zsh-completions"
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
@@ -52,6 +52,8 @@ autoload -U +X bashcompinit && bashcompinit
 
 alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin/'
 
+complete -cf sudo
+
 alias emacs='emacs -nw'
 alias emacsclient='emacsclient -nw -a ""'
 [ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
@@ -63,5 +65,13 @@ test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_in
 BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
-RUST_SRC_PATH="$HOME/rustc-src-1.7.0/src"
+RUST_SRC_PATH="$(ghq root)/github.com/rust-lang/rust/src"
 export RUST_SRC_PATH
+
+function docker-setup() {
+  eval "$(docker-machine env $1)"
+}
+
+alias mikutter="ruby $(ghq root)/github.com/mikutter/mikutter/mikutter.rb &"
+
+alias spacemacs="HOME=~/spacemacs /usr/bin/env emacs"
