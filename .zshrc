@@ -30,6 +30,7 @@ typeset -U path PATH
 # User configuration
 path=(
     $HOME/bin(N-/)
+    /Library/Egison/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $HOME/.cargo/bin(N-/)
