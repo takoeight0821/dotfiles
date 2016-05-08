@@ -31,6 +31,7 @@ typeset -U path PATH
 path=(
     $HOME/bin(N-/)
     /Library/Egison/bin(N-/)
+    $HOME/Lisp/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $HOME/.cargo/bin(N-/)
