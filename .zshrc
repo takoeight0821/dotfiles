@@ -1,4 +1,9 @@
-source ~/.zplug/zplug
+[ -x "`which tmux`" ] && tmux
+# source ~/.zplug/zplug
+autoload -U +X compinit && compinit
+
+export ZPLUG_HOME=$HOME/.zplug
+source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
@@ -23,19 +28,21 @@ fi
 # プラグインを読み込み、コマンドにパスを通す
 zplug load --verbose
 
-source $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme
+ZSH_THEME="robbyrussell"
+source $ZSH/oh-my-zsh.sh
 
 typeset -U path PATH
 
 # User configuration
 path=(
     $HOME/bin(N-/)
-    /Library/Egison/bin(N-/)
+    $HOME/.cabal/bin(N-/)
+    $HOME/.egison/bin(N-/)
     $HOME/Lisp/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
+    $HOME/.ghq/github.com/cxxxr/lem(N-/)
     $HOME/.cargo/bin(N-/)
-    $HOME/.ghq/github.com/ternjs/tern/bin(N-/)
     /usr/local/bin(N-/)
     $path
 )
@@ -46,7 +53,10 @@ if [ -x "`which go`" ]; then
 fi
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-autoload -U +X compinit && compinit
+if [ -f $(brew --prefix)/etc/brew-wrap ];then
+    source $(brew --prefix)/etc/brew-wrap
+fi
+
 autoload -U +X bashcompinit && bashcompinit
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
 

@@ -53,5 +53,4 @@
   unmerged = diff --name-only --diff-filter=U
 [ghq]
   root = ~/.ghq
-  root = ~/.go/src
   root = ~/.roswell/local-projects
