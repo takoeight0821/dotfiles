@@ -1,11 +1,11 @@
 # This is Git's per-user configuration file.
 [core]
 # Please adapt and uncomment the following lines:
-    user = "Kono Yuya"
+    user = "Yuya Kono"
     email = "takohati0821@gmail.com"
     editor = "emacs"
 [user]
-	name = Kono Yuya
+	name = Yuya Kono
 	email = takohati0821@gmail.com
 [filter "media"]
 	required = true

@@ -1,4 +1,3 @@
-[ -x "`which tmux`" ] && tmux
 # source ~/.zplug/zplug
 autoload -U +X compinit && compinit
 
