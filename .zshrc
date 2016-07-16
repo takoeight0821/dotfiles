@@ -34,6 +34,7 @@ typeset -U path PATH
 
 # User configuration
 path=(
+    /usr/local/opt/llvm/bin(N-/)
     $HOME/bin(N-/)
     $HOME/.cabal/bin(N-/)
     $HOME/.egison/bin(N-/)
@@ -65,8 +66,6 @@ alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_in
 
 complete -cf sudo
 
-alias emacs='emacs -nw'
-alias emacsclient='emacsclient -nw -a ""'
 [ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 
 export LESS='-F -g -i -M -R -S -w -X -z-4'
@@ -83,6 +82,4 @@ function docker-setup() {
   eval "$(docker-machine env $1)"
 }
 
-alias mikutter="ruby $(ghq root)/github.com/mikutter/mikutter/mikutter.rb &"
-
-alias spacemacs="HOME=~/spacemacs /usr/bin/env emacs"
+alias emacs='emacsclient -nw -a ""'
