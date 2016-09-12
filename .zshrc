@@ -1,7 +1,6 @@
-# source ~/.zplug/zplug
 autoload -U +X compinit && compinit
 
-export ZPLUG_HOME=$HOME/.zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -11,7 +10,6 @@ zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
-zplug "themes/robbyrussel", from:oh-my-zsh
 
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
@@ -47,10 +45,14 @@ path=(
     $path
 )
 
+export JAVA_HOME=$(/usr/libexec/java_home)
+
 if [ -x "`which go`" ]; then
     export GOPATH=$HOME/.go
     path=( $GOPATH/bin $path )
 fi
+
+[ -x "`which ros`" ] && alias ros='rlwrap ros'
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 if [ -f $(brew --prefix)/etc/brew-wrap ];then
@@ -72,7 +74,7 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
+BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-railscasts.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 RUST_SRC_PATH="$(ghq root)/github.com/rust-lang/rust/src"
@@ -83,3 +85,8 @@ function docker-setup() {
 }
 
 alias emacs='emacsclient -nw -a ""'
+alias reboot-emacs='emacsclient -e "(kill-emacs)" && \emacs --daemon'
+alias kill-emacs='emacsclient -e "(kill-emacs)"'
+alias ccat='pygmentize -g'
+
+export CC=clang
