@@ -55,9 +55,6 @@ fi
 [ -x "`which ros`" ] && alias ros='rlwrap ros'
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-if [ -f $(brew --prefix)/etc/brew-wrap ];then
-    source $(brew --prefix)/etc/brew-wrap
-fi
 
 autoload -U +X bashcompinit && bashcompinit
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
