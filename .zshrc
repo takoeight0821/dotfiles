@@ -1,6 +1,15 @@
-autoload -U +X compinit && compinit
+autoload -U +X compinit && compinit -u
+autoload -U +X bashcompinit && bashcompinit -u
 
-export ZPLUG_HOME=/usr/local/opt/zplug
+complete -cf sudo
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
+
+export ZPLUG_HOME=~/.zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -10,7 +19,7 @@ zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
-
+zplug "themes/robbyrussell", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
 # false のとき（つまり未インストール項目がある）y/N プロンプトで
@@ -25,14 +34,13 @@ fi
 # プラグインを読み込み、コマンドにパスを通す
 zplug load --verbose
 
-ZSH_THEME="robbyrussell"
-source $ZSH/oh-my-zsh.sh
+eval $(cat $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme)
 
 typeset -U path PATH
 
 # User configuration
 path=(
-    /usr/local/opt/llvm/bin(N-/)
+    #/usr/local/opt/llvm/bin(N-/)
     $HOME/bin(N-/)
     $HOME/.cabal/bin(N-/)
     $HOME/.egison/bin(N-/)
@@ -56,18 +64,18 @@ fi
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-autoload -U +X bashcompinit && bashcompinit
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
 
 [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin/'
 
-complete -cf sudo
 
 [ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 
 export LESS='-F -g -i -M -R -S -w -X -z-4'
+alias ls='ls -G'
+alias la='ls -G -a'
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
@@ -86,4 +94,5 @@ alias reboot-emacs='emacsclient -e "(kill-emacs)" && \emacs --daemon'
 alias kill-emacs='emacsclient -e "(kill-emacs)"'
 alias ccat='pygmentize -g'
 
-export CC=clang
+export EDITOR='emacsclient -nw -a ""'
+
