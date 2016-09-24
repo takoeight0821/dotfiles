@@ -53,6 +53,16 @@ path=(
     $path
 )
 
+HISTFILE=$HOME/.zhistory
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 if [ -x "`which go`" ]; then
@@ -92,7 +102,6 @@ function docker-setup() {
 alias emacs='emacsclient -nw -a ""'
 alias reboot-emacs='emacsclient -e "(kill-emacs)" && \emacs --daemon'
 alias kill-emacs='emacsclient -e "(kill-emacs)"'
-alias ccat='pygmentize -g'
 
 export EDITOR='emacsclient -nw -a ""'
 
