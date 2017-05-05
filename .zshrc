@@ -32,7 +32,7 @@ fi
 # プラグインを読み込み、コマンドにパスを通す
 zplug load --verbose
 
-eval $(cat $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme)
+# eval $(cat $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme)
 
 export EDITOR='emacs'
 
@@ -76,7 +76,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=
 export JAVA_HOME=$(/usr/libexec/java_home)
 
 if [ -x "`which go`" ]; then
-    export GOPATH=$HOME/Projects/Repos/Go
+    export GOPATH=$HOME/dev
     path=( $GOPATH/bin $path )
 fi
 
@@ -119,10 +119,81 @@ alias emacs='emacs -nw'
 
 export PGDATA=/usr/local/var/postgres
 
-. ~/erlang/19.2/activate
+. ~/kerl/19.2/activate
 
-export HAXE_STD_PATH="/usr/local/lib/haxe/std"
+# export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 # added by travis gem
 [ -f /Users/konoyuya/.travis/travis.sh ] && source /Users/konoyuya/.travis/travis.sh
 
+
+function peco-src() {
+    local src=$(ghq list --full-path | peco --query "$LBUFFER")
+    if [ -n "$src" ]; then
+        BUFFER="cd $src"
+        zle accept-line
+    fi
+    zle -R -c
+}
+zle -N peco-src
+
+bindkey -v
+bindkey -M viins '\er' history-incremental-pattern-search-forward
+bindkey -M viins '^?'  backward-delete-char
+bindkey -M viins '^A'  beginning-of-line
+bindkey -M viins '^B'  backward-char
+bindkey -M viins '^D'  delete-char-or-list
+bindkey -M viins '^E'  end-of-line
+bindkey -M viins '^F'  forward-char
+bindkey -M viins '^G'  send-break
+bindkey -M viins '^H'  backward-delete-char
+bindkey -M viins '^K'  kill-line
+bindkey -M viins '^N'  down-line-or-history
+bindkey -M viins '^P'  up-line-or-history
+bindkey -M viins '^R'  history-incremental-pattern-search-backward
+bindkey -M viins '^U'  backward-kill-line
+bindkey -M viins '^W'  backward-kill-word
+bindkey -M viins '^Y'  yank
+
+bindkey -M viins '^]' peco-src
+
+autoload -Uz colors; colors
+autoload -Uz add-zsh-hook
+autoload -Uz terminfo
+
+terminfo_down_sc=$terminfo[cud1]$terminfo[cuu1]$terminfo[sc]$terminfo[cud1]
+left_down_prompt_preexec() {
+    print -rn -- $terminfo[el]
+}
+add-zsh-hook preexec left_down_prompt_preexec
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
+
+RPROMPT="[$(git_prompt_info)%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%} %~]"
+
+function zle-keymap-select zle-line-init zle-line-finish
+{
+    case $KEYMAP in
+        main|viins)
+            PROMPT_2="$fg[cyan]-- INSERT --$reset_color"
+            ;;
+        vicmd)
+            PROMPT_2="$fg[white]-- NORMAL --$reset_color"
+            ;;
+        vivis|vivli)
+            PROMPT_2="$fg[yellow]-- VISUAL --$reset_color"
+            ;;
+    esac
+    setopt prompt_subst
+    PROMPT="%{$terminfo_down_sc$PROMPT_2$terminfo[rc]%}[%(?.%{${fg[green]}%}.%{${fg[red]}%})%1d%{${reset_color}%}]$ "
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
+zle -N edit-command-line
+export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
