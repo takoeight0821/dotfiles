@@ -1,11 +1,11 @@
 
 # Check if zplug is installed
-# if [[ ! -d ~/.zplug ]]; then
-#   git clone https://github.com/zplug/zplug ~/.zplug
-#   source ~/.zplug/init.zsh && zplug update --self
-# fi
+if [ ! -d ~/.zplug ]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
 
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=~/.zplug
 source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
@@ -76,7 +76,7 @@ bindkey '^[[B' history-substring-search-down
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=**'
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+[ -x /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home)
 
 if [ -x "`which go`" ]; then
     export GOPATH=$HOME/dev
@@ -102,7 +102,7 @@ alias la='ls -G -a'
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-railscasts.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+[ -s $BASE16_SHELL ] && source $BASE16_SHELL
 
 RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
 export RUST_SRC_PATH
@@ -131,6 +131,7 @@ export PGDATA=/usr/local/var/postgres
 
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
+[ -x "`which rbenv`" ] && eval "$(rbenv init -)"
 function peco-src() {
     local src=$(ghq list --full-path | peco --query "$LBUFFER")
     if [ -n "$src" ]; then
@@ -202,4 +203,5 @@ zle -N zle-keymap-select
 zle -N edit-command-line
 # export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
 
-[[ -x "`which rbenv`" ]] && eval "$(rbenv init -)"
+
+
