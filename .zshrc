@@ -40,6 +40,7 @@ typeset -U path PATH fpath
 
 # User configuration
 path=(
+    $HOME/.rbenv/bin(N-/)
     /usr/local/opt/llvm/bin(N-/)
     /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/bin(N-/)
@@ -49,6 +50,8 @@ path=(
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $HOME/.cargo/bin(N-/)
+    /Applications/Julia-0.5.app/Contents/Resources/julia/bin(N-/)
+    /Library/TeX/texbin(N-/)
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
     $path
@@ -119,13 +122,14 @@ alias emacs='emacs -nw'
 
 export PGDATA=/usr/local/var/postgres
 
-. ~/kerl/19.2/activate
+[ -x "~/kerl/19.2/activate" ] && . ~/kerl/19.2/activate
 
 # export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 # added by travis gem
 [ -f /Users/konoyuya/.travis/travis.sh ] && source /Users/konoyuya/.travis/travis.sh
 
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
 function peco-src() {
     local src=$(ghq list --full-path | peco --query "$LBUFFER")
@@ -172,7 +176,6 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
-RPROMPT="[$(git_prompt_info)%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%} %~]"
 
 function zle-keymap-select zle-line-init zle-line-finish
 {
@@ -188,6 +191,7 @@ function zle-keymap-select zle-line-init zle-line-finish
             ;;
     esac
     setopt prompt_subst
+    RPROMPT="[$(git_prompt_info)%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%} %~]"
     PROMPT="%{$terminfo_down_sc$PROMPT_2$terminfo[rc]%}[%(?.%{${fg[green]}%}.%{${fg[red]}%})%1d%{${reset_color}%}]$ "
     zle reset-prompt
 }
@@ -196,4 +200,6 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 zle -N edit-command-line
-export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
+# export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
+
+[[ -x "`which rbenv`" ]] && eval "$(rbenv init -)"

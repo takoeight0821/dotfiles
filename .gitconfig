@@ -52,5 +52,5 @@
   mergetrail = log --ancestry-path --merges
   unmerged = diff --name-only --diff-filter=U
 [ghq]
-  root = ~/.ghq
+  root = ~/dev/src
   root = ~/.roswell/local-projects

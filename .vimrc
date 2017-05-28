@@ -38,47 +38,80 @@ if &runtimepath !~# '/dein.vim'
   execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
 
-" プラグインリストを収めた TOML ファイル
-let s:toml      = $DOTVIM . '/rc/dein.toml'
-let s:lazy_toml = $DOTVIM . '/rc/dein_lazy.toml'
+if dein#load_state(s:dein_dir)
+	call dein#begin(s:dein_dir)
 
-" 設定開始
-call dein#begin(s:dein_dir, [expand('<sfile>'), s:toml, s:lazy_toml])
-
-call dein#load_toml(s:toml,      {'lazy': 0})
-call dein#load_toml(s:lazy_toml, {'lazy': 1})
-
-call dein#end()
-call dein#save_state()
-
-if has('vim_starting') && dein#check_install()
-  call dein#install()
+	call dein#add('Shougo/dein.vim')
+	call dein#add('Shougo/neocomplete.vim')
+    
+	call dein#end()
+	call dein#save_state()
 endif
 
 filetype plugin indent on
+syntax enable
+
+set ignorecase
+set smartcase
+
+set tabstop=4
+set expandtab
+set autoindent
+set backspace=2
+set wrapscan
+set showmatch
+set wildmenu
+set formatoptions+=mM
 
 set number
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set autoindent
-set smartindent
-set pastetoggle=<F11>
+set ruler
+set wrap
+set laststatus=2
+set cmdheight=2
+set showcmd
+set notitle
 
 set nobackup
-set noundofile
-set noswapfile
 
-set background=dark
-let base16colorspace=256
-colorscheme base16-railscasts
+set clipboard+=unnamed
 
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
 
-let g:slimv_lisp = 'ros run'
-let g:slimv_impl = 'sbcl'
+
+
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
+" ## added by OPAM user-setup for vim / ocp-indent ## 037644629753fb837a56c5af43f659b0 ## you can edit, but keep this line
+if count(s:opam_available_tools,"ocp-indent") == 0
+  source "/Users/yuya/.opam/system/share/vim/syntax/ocp-indent.vim"
+endif
+" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
