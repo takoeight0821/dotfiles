@@ -99,6 +99,8 @@ export LESS='-F -g -i -M -R -S -w -X -z-4'
 alias ls='ls -G'
 alias la='ls -G -a'
 
+
+[ -x "`which gcc-7`" ] && alias gcc=gcc-7 && alias gcc89="gcc-7 -std=c89"
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-railscasts.sh"
@@ -111,10 +113,6 @@ function docker-setup() {
   eval "$(docker-machine env $1)"
 }
 
-## create emacs env file
-perl -wle \
-    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
-    PATH > ~/.emacs.d/shellenv.el
 
 alias emacs='emacs -nw'
 
@@ -122,7 +120,7 @@ alias emacs='emacs -nw'
 
 export PGDATA=/usr/local/var/postgres
 
-[ -x "~/kerl/19.2/activate" ] && . ~/kerl/19.2/activate
+# . ~/.kerl/19.3/activate
 
 # export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
@@ -203,5 +201,11 @@ zle -N zle-keymap-select
 zle -N edit-command-line
 # export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
 
+export ECLIPSE_HOME=~/Applications/Eclipse.app
 
+alias ccat='pygmentize'
 
+## create emacs env file
+perl -wle \
+    'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
+    PATH > ~/.emacs.d/shellenv.el
