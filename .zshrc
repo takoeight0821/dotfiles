@@ -1,4 +1,3 @@
-
 # Check if zplug is installed
 if [ ! -d ~/.zplug ]; then
   git clone https://github.com/zplug/zplug ~/.zplug
@@ -81,6 +80,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=
 if [ -x "`which go`" ]; then
     export GOPATH=$HOME/dev
     path=( $GOPATH/bin $path )
+    export GOROOT="`go env GOROOT`"
 fi
 
 [ -x "`which ros`" ] && alias ros='rlwrap ros'
@@ -125,7 +125,7 @@ export PGDATA=/usr/local/var/postgres
 # export HAXE_STD_PATH="/usr/local/lib/haxe/std"
 
 # added by travis gem
-[ -f /Users/konoyuya/.travis/travis.sh ] && source /Users/konoyuya/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
@@ -209,3 +209,4 @@ alias ccat='pygmentize'
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
     PATH > ~/.emacs.d/shellenv.el
+export CARP_DIR=$HOME/dev/src/github.com/carp-lang/Carp

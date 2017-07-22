@@ -4,7 +4,6 @@ if 0 | endif
 let s:true  = 1
 let s:false = 0
 
-
 " platform
 " https://github.com/b4b4r07/dotfiles/blob/master/.vimrc
 let s:is_windows = has('win16') || has('win32') || has('win64')
