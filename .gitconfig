@@ -19,6 +19,7 @@
 	clean = git lfs clean %f
 	smudge = git lfs smudge %f
 	required = true
+	process = git-lfs filter-process
 [alias]
   unstage = reset -q HEAD --
   discard = checkout --
@@ -54,3 +55,4 @@
 [ghq]
   root = ~/dev/src
   root = ~/.roswell/local-projects
+  root = ~/Dropbox

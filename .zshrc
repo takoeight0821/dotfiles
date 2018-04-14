@@ -12,10 +12,10 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "psprint/zsh-navigation-tools"
-zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
-# zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/brew", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
 zplug "themes/robbyrussell", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
@@ -58,8 +58,8 @@ path=(
 
 fpath=($HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
 
-autoload -U +X compinit && compinit -u
-autoload -U +X bashcompinit && bashcompinit -u
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 
 complete -cf sudo
 
@@ -87,7 +87,8 @@ fi
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-[ -x "`which stack`" ] && eval "$(stack --bash-completion-script stack)"
+[ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
+[ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
 
 [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
@@ -101,10 +102,12 @@ alias la='ls -G -a'
 
 
 [ -x "`which gcc-7`" ] && alias gcc=gcc-7 && alias gcc89="gcc-7 -std=c89"
+[ -x "`which g++-7`" ] && alias g++=g++-7
+
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-railscasts.sh"
-[ -s $BASE16_SHELL ] && source $BASE16_SHELL
+# BASE16_SHELL=$HOME/.config/base16-shell/
+# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
 export RUST_SRC_PATH
@@ -112,9 +115,6 @@ export RUST_SRC_PATH
 function docker-setup() {
   eval "$(docker-machine env $1)"
 }
-
-
-alias emacs='emacs -nw'
 
 [ -x "`which sagittarius`" ] && alias sagittarius='rlwrap sagittarius'
 
@@ -204,9 +204,15 @@ zle -N edit-command-line
 export ECLIPSE_HOME=~/Applications/Eclipse.app
 
 alias ccat='pygmentize'
-
+# alias emacs='emacs -nw'
+alias emacs='emacsclient -nw -a ""'
+alias ekill='emacsclient -e "(kill-emacs)"'
+alias spacemacs='HOME=~/spacemacs \emacs'
+alias pg='HOME=~/proofgeneral emacs'
 ## create emacs env file
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
     PATH > ~/.emacs.d/shellenv.el
 export CARP_DIR=$HOME/dev/src/github.com/carp-lang/Carp
+
+export SATYSFI_LIB_ROOT="$HOME/dev/src/github.com/gfngfn/SATySFi/lib-satysfi"
