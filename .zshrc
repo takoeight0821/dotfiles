@@ -16,6 +16,7 @@ zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/cargo", from:oh-my-zsh
 zplug "themes/robbyrussell", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
@@ -40,16 +41,13 @@ typeset -U path PATH fpath
 # User configuration
 path=(
     $HOME/.rbenv/bin(N-/)
-    /usr/local/opt/llvm/bin(N-/)
-    /usr/local/opt/llvm/share/llvm(N-/)
+    # /usr/local/opt/llvm/bin(N-/)
+    # /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/bin(N-/)
     $HOME/.cabal/bin(N-/)
-    $HOME/.egison/bin(N-/)
-    $HOME/Lisp/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $HOME/.cargo/bin(N-/)
-    /Applications/Julia-0.5.app/Contents/Resources/julia/bin(N-/)
     /Library/TeX/texbin(N-/)
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
@@ -58,8 +56,8 @@ path=(
 
 fpath=($HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
 
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+autoload -U bashcompinit && bashcompinit
+autoload -U compinit && compinit
 
 complete -cf sudo
 
@@ -90,11 +88,10 @@ fi
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
 [ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
 
-[ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-alias opam-upgrade!='wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin/'
-
-[ -e '/Applications/MacVim.app' ] && alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+[ -x "`which opam`" ] && eval "$(opam env)"
 
 export LESS='-F -g -i -M -R -S -w -X -z-4'
 alias ls='ls -G'
@@ -199,16 +196,15 @@ zle -N zle-line-init
 zle -N zle-line-finish
 zle -N zle-keymap-select
 zle -N edit-command-line
-# export PATH="/Users/konoyuya/.julia/v0.5/Homebrew/deps/usr/opt/cctools/bin:$PATH"
 
 export ECLIPSE_HOME=~/Applications/Eclipse.app
 
 alias ccat='pygmentize'
-# alias emacs='emacs -nw'
-alias emacs='emacsclient -nw -a ""'
-alias ekill='emacsclient -e "(kill-emacs)"'
-alias spacemacs='HOME=~/spacemacs \emacs'
-alias pg='HOME=~/proofgeneral emacs'
+alias emacs='emacs -nw'
+# alias emacs='emacsclient -nw -a ""'
+# alias ekill='emacsclient -e "(kill-emacs)"'
+# alias spacemacs='HOME=~/spacemacs \emacs'
+# alias pg='HOME=~/proofgeneral emacs'
 ## create emacs env file
 perl -wle \
     'do { print qq/(setenv "$_" "$ENV{$_}")/ if exists $ENV{$_} } for @ARGV' \
@@ -216,3 +212,5 @@ perl -wle \
 export CARP_DIR=$HOME/dev/src/github.com/carp-lang/Carp
 
 export SATYSFI_LIB_ROOT="$HOME/dev/src/github.com/gfngfn/SATySFi/lib-satysfi"
+
+export KIT_STD_PATH="$HOME/dev/src/github.com/kitlang/kit/std"
