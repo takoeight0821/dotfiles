@@ -44,6 +44,7 @@ path=(
     # /usr/local/opt/llvm/bin(N-/)
     # /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/bin(N-/)
+    $HOME/.ghcup/bin(N-/)
     $HOME/.cabal/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.roswell/bin(N-/)
