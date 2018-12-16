@@ -87,7 +87,7 @@ fi
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
-[ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
+# [ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
 
 # [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -201,9 +201,9 @@ zle -N edit-command-line
 export ECLIPSE_HOME=~/Applications/Eclipse.app
 
 alias ccat='pygmentize'
-alias emacs='emacs -nw'
-# alias emacs='emacsclient -nw -a ""'
-# alias ekill='emacsclient -e "(kill-emacs)"'
+# alias emacs='emacs -nw'
+alias emacs='emacsclient -nw -a ""'
+alias ekill='emacsclient -e "(kill-emacs)"'
 # alias spacemacs='HOME=~/spacemacs \emacs'
 # alias pg='HOME=~/proofgeneral emacs'
 ## create emacs env file
