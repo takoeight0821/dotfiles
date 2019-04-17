@@ -54,5 +54,3 @@
   unmerged = diff --name-only --diff-filter=U
 [ghq]
   root = ~/dev/src
-  root = ~/.roswell/local-projects
-  root = ~/Dropbox

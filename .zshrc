@@ -13,10 +13,10 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "psprint/zsh-navigation-tools"
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/web-search", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/cargo", from:oh-my-zsh
+zplug "plugins/web-search", from:oh-my-zsh
 zplug "themes/robbyrussell", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
@@ -41,9 +41,11 @@ typeset -U path PATH fpath
 # User configuration
 path=(
     $HOME/.rbenv/bin(N-/)
-    # /usr/local/opt/llvm/bin(N-/)
-    # /usr/local/opt/llvm/share/llvm(N-/)
+    /usr/local/opt/llvm/bin(N-/)
+    /usr/local/opt/llvm/share/llvm(N-/)
+    $HOME/.yarn/bin(N-/)
     $HOME/bin(N-/)
+    $HOME/.composer/vendor/bin(N-/)
     $HOME/.cabal/bin(N-/)
     $HOME/.local/bin(N-/)
     $HOME/.ghcup/bin(N-/)
@@ -74,7 +76,7 @@ bindkey '^[[B' history-substring-search-down
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=**'
 
-[ -x /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home)
+[ -x /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
 if [ -x "`which go`" ]; then
     export GOPATH=$HOME/dev
@@ -86,11 +88,10 @@ fi
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-[ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
 # [ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
 
 # [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 [ -x "`which opam`" ] && eval "$(opam env)"
 
@@ -215,3 +216,11 @@ export CARP_DIR=$HOME/dev/src/github.com/carp-lang/Carp
 export SATYSFI_LIB_ROOT="$HOME/dev/src/github.com/gfngfn/SATySFi/lib-satysfi"
 
 export KIT_STD_PATH="$HOME/dev/src/github.com/kitlang/kit/std"
+
+. /Users/yuya/.nix-profile/etc/profile.d/nix.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+[ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
