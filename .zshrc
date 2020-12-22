@@ -41,8 +41,9 @@ typeset -U path PATH fpath
 # User configuration
 path=(
     $HOME/.rbenv/bin(N-/)
+    # https://docs.haskellstack.org/en/stable/faq/#how-do-i-resolve-linker-errors-when-running-stack-setup-or-stack-build-on-macos
     /usr/local/opt/llvm/bin(N-/)
-    /usr/local/opt/llvm/share/llvm(N-/)
+    # /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/.yarn/bin(N-/)
     $HOME/bin(N-/)
     $HOME/.composer/vendor/bin(N-/)
@@ -57,7 +58,7 @@ path=(
     $path
 )
 
-fpath=($HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
+fpath=($HOME/.zfunc $HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
 
 autoload -U bashcompinit && bashcompinit
 autoload -U compinit && compinit
@@ -65,8 +66,10 @@ autoload -U compinit && compinit
 complete -cf sudo
 
 HISTFILE=$HOME/.zhistory
-HISTSIZE=1000000
-SAVEHIST=1000000
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_dups
+setopt hist_save_no_dups
 
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -76,7 +79,6 @@ bindkey '^[[B' history-substring-search-down
 
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=**'
 
-[ -x /usr/libexec/java_home ] && export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 
 if [ -x "`which go`" ]; then
     export GOPATH=$HOME/dev
@@ -88,7 +90,6 @@ fi
 
 [ -x "`which brew`" ] && export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-# [ -x "`which malgo`" ] && eval "$(malgo --bash-completion-script `which malgo`)"
 
 # [ -x "`which opam`" ] && eval `opam config env` && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 # test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -103,13 +104,10 @@ alias la='ls -G -a'
 [ -x "`which gcc-7`" ] && alias gcc=gcc-7 && alias gcc89="gcc-7 -std=c89"
 [ -x "`which g++-7`" ] && alias g++=g++-7
 
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+# test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-# BASE16_SHELL=$HOME/.config/base16-shell/
-# [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-
-RUST_SRC_PATH=~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
-export RUST_SRC_PATH
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
 function docker-setup() {
   eval "$(docker-machine env $1)"
@@ -174,9 +172,9 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[blue]%})"
 
-
 function zle-keymap-select zle-line-init zle-line-finish
 {
+    setopt prompt_subst
     case $KEYMAP in
         main|viins)
             PROMPT_2="$fg[cyan]-- INSERT --$reset_color"
@@ -188,8 +186,8 @@ function zle-keymap-select zle-line-init zle-line-finish
             PROMPT_2="$fg[yellow]-- VISUAL --$reset_color"
             ;;
     esac
-    setopt prompt_subst
     RPROMPT="[$(git_prompt_info)%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%} %~]"
+    # RPROMPT="[%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%} %~]"
     PROMPT="%{$terminfo_down_sc$PROMPT_2$terminfo[rc]%}[%(?.%{${fg[green]}%}.%{${fg[red]}%})%1d%{${reset_color}%}]$ "
     zle reset-prompt
 }
@@ -201,7 +199,7 @@ zle -N edit-command-line
 
 export ECLIPSE_HOME=~/Applications/Eclipse.app
 
-alias ccat='pygmentize'
+alias ccat='pygmentize -f console'
 # alias emacs='emacs -nw'
 alias emacs='emacsclient -nw -a ""'
 alias ekill='emacsclient -e "(kill-emacs)"'
@@ -217,10 +215,14 @@ export SATYSFI_LIB_ROOT="$HOME/dev/src/github.com/gfngfn/SATySFi/lib-satysfi"
 
 export KIT_STD_PATH="$HOME/dev/src/github.com/kitlang/kit/std"
 
-. /Users/yuya/.nix-profile/etc/profile.d/nix.sh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
 [ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
+
+[ -x "`which rustc`" ] && export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
+[ -x "`which malgoc`" ] && source <(malgoc --bash-completion-script `which malgoc`)
+
+[ -x "`which griffc`" ] && source <(griffc --bash-completion-script `which griffc`)
+
+
+# added by travis gem
+[ ! -s /Users/yuya/.travis/travis.sh ] || source /Users/yuya/.travis/travis.sh
