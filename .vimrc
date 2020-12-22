@@ -14,16 +14,6 @@ let s:is_mac = !s:is_windows && !s:is_cygwin
       \    system('uname') =~? '^darwin'))
 let s:is_linux = !s:is_mac && has('unix')
 
-let s:vimrc = expand("<sfile>:p")
-let $MYVIMRC = s:vimrc
-
-" NeoBundle path
-if s:is_windows
-  let $DOTVIM = expand('~/vimfiles')
-else
-  let $DOTVIM = expand('~/.vim')
-endif
-
 " プラグインが実際にインストールされるディレクトリ
 let s:dein_dir = expand('~/.cache/dein')
 " dein.vim 本体
@@ -38,13 +28,17 @@ if &runtimepath !~# '/dein.vim'
 endif
 
 if dein#load_state(s:dein_dir)
-	call dein#begin(s:dein_dir)
+    call dein#begin(s:dein_dir)
 
-	call dein#add('Shougo/dein.vim')
-	call dein#add('Shougo/neocomplete.vim')
-    
-	call dein#end()
-	call dein#save_state()
+    call dein#add('Shougo/dein.vim')
+    call dein#add('Shougo/deoplete.nvim')
+
+    if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
+    call dein#end()
+    call dein#save_state()
 endif
 
 filetype plugin indent on
@@ -54,8 +48,12 @@ set ignorecase
 set smartcase
 
 set tabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
+set smarttab
+set smartindent
+
 set backspace=2
 set wrapscan
 set showmatch
@@ -71,37 +69,13 @@ set showcmd
 set notitle
 
 set nobackup
+set noswapfile
 
 set clipboard+=unnamed
-" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
-let s:opam_share_dir = system("opam config var share")
-let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
 
-let s:opam_configuration = {}
+try
+    colorscheme desert
+catch
+endtry
 
-function! OpamConfOcpIndent()
-  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-endfunction
-let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-function! OpamConfOcpIndex()
-  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-endfunction
-let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-function! OpamConfMerlin()
-  let l:dir = s:opam_share_dir . "/merlin/vim"
-  execute "set rtp+=" . l:dir
-endfunction
-let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
-let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-for tool in s:opam_packages
-  " Respect package order (merlin should be after ocp-index)
-  if count(s:opam_available_tools, tool) > 0
-    call s:opam_configuration[tool]()
-  endif
-endfor
-" ## end of OPAM user-setup addition for vim / base ## keep this line
+set background=dark
