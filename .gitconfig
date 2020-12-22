@@ -3,7 +3,7 @@
 # Please adapt and uncomment the following lines:
     user = "Yuya Kono"
     email = "takohati0821@gmail.com"
-    editor = "emacs"
+    editor = "vim"
 [user]
 	name = Yuya Kono
 	email = takohati0821@gmail.com
@@ -16,8 +16,8 @@
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
 [alias]
@@ -54,3 +54,5 @@
   unmerged = diff --name-only --diff-filter=U
 [ghq]
   root = ~/dev/src
+[credential]
+	helper = osxkeychain
