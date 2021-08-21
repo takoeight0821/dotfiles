@@ -1,12 +1,17 @@
 # This is Git's per-user configuration file.
 [core]
 # Please adapt and uncomment the following lines:
-    user = "Yuya Kono"
-    email = "takohati0821@gmail.com"
-    editor = "vim"
+  user = "Yuya Kono"
+  email = "takohati0821@gmail.com"
+  editor = "vim"
+  pager = delta
+  excludesfile = ~/.gitignore
+	autocrlf = input
 [user]
 	name = Yuya Kono
 	email = takohati0821@gmail.com
+[pull]
+	rabase = false
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -37,8 +42,8 @@
   branches = branch -a
   stashes = stash list
   remotes = remote -v
-  prestage = diff -w --word-diff=color
-  precommit = diff --cached -w --word-diff=color --word-diff-regex='[^[:space:]<>]+'
+  prestage = diff -w
+  precommit = diff --cached -w
   move = mv
   remove = rm
   unmerged = branch --no-merged
@@ -52,7 +57,17 @@
   filetrail = git log --follow -p -w
   mergetrail = log --ancestry-path --merges
   unmerged = diff --name-only --diff-filter=U
+[delta]
+  plus-color = "#012800"
+  minus-color = "#340001"
+  syntax-theme = Monokai Extended
+[interactive]
+  diffFilter = delta --color-only
 [ghq]
+  root = ~/go
   root = ~/dev/src
 [credential]
 	helper = osxkeychain
+
+[init]
+	defaultBranch = main

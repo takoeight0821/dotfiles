@@ -4,3 +4,4 @@ elpa/
 places
 snippets/
 .DS_Store
+.vimrc.local

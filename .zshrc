@@ -1,3 +1,5 @@
+source ~/.zsh_profile
+
 # Check if zplug is installed
 if [ ! -d ~/.zplug ]; then
   git clone https://github.com/zplug/zplug ~/.zplug
@@ -16,7 +18,7 @@ zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/cargo", from:oh-my-zsh
-zplug "plugins/web-search", from:oh-my-zsh
+# zplug "plugins/web-search", from:oh-my-zsh
 zplug "themes/robbyrussell", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
@@ -34,12 +36,11 @@ zplug load --verbose
 
 # eval $(cat $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme)
 
-export EDITOR='emacs'
-
 typeset -U path PATH fpath
 
 # User configuration
 path=(
+    # /Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home/bin(N-/)
     $HOME/.rbenv/bin(N-/)
     # https://docs.haskellstack.org/en/stable/faq/#how-do-i-resolve-linker-errors-when-running-stack-setup-or-stack-build-on-macos
     /usr/local/opt/llvm/bin(N-/)
@@ -52,6 +53,7 @@ path=(
     $HOME/.ghcup/bin(N-/)
     $HOME/.roswell/bin(N-/)
     $HOME/.cargo/bin(N-/)
+    /usr/local/smlnj/bin(N-/)
     /Library/TeX/texbin(N-/)
     /usr/local/bin(N-/)
     /usr/local/sbin(N-/)
@@ -60,8 +62,8 @@ path=(
 
 fpath=($HOME/.zfunc $HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
 
-autoload -U bashcompinit && bashcompinit
-autoload -U compinit && compinit
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 
 complete -cf sudo
 
@@ -70,6 +72,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt hist_ignore_dups
 setopt hist_save_no_dups
+setopt share_history
 
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
@@ -81,9 +84,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z} r:|[-_.]=
 
 
 if [ -x "`which go`" ]; then
-    export GOPATH=$HOME/dev
-    path=( $GOPATH/bin $path )
-    export GOROOT="`go env GOROOT`"
+    path=( $(go env GOPATH)/bin $path )
 fi
 
 [ -x "`which ros`" ] && alias ros='rlwrap ros'
@@ -106,8 +107,11 @@ alias la='ls -G -a'
 
 # test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 function docker-setup() {
   eval "$(docker-machine env $1)"
@@ -127,8 +131,9 @@ export PGDATA=/usr/local/var/postgres
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
 [ -x "`which rbenv`" ] && eval "$(rbenv init -)"
+
 function peco-src() {
-    local src=$(ghq list --full-path | peco --query "$LBUFFER")
+    local src=$(ghq list --full-path | fzf --query "$LBUFFER")
     if [ -n "$src" ]; then
         BUFFER="cd $src"
         zle accept-line
@@ -138,6 +143,7 @@ function peco-src() {
 zle -N peco-src
 
 bindkey -v
+bindkey -M vicmd '^[' undefined-key
 bindkey -M viins '\er' history-incremental-pattern-search-forward
 bindkey -M viins '^?'  backward-delete-char
 bindkey -M viins '^A'  beginning-of-line
@@ -215,14 +221,25 @@ export SATYSFI_LIB_ROOT="$HOME/dev/src/github.com/gfngfn/SATySFi/lib-satysfi"
 
 export KIT_STD_PATH="$HOME/dev/src/github.com/kitlang/kit/std"
 
-[ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
+# [ -x "`which stack`" ] && eval "$(stack --bash-completion-script `which stack`)"
 
 [ -x "`which rustc`" ] && export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
-[ -x "`which malgoc`" ] && source <(malgoc --bash-completion-script `which malgoc`)
+# [ -x "`which malgoc`" ] && source <(malgoc --bash-completion-script "`which malgoc`")
 
-[ -x "`which griffc`" ] && source <(griffc --bash-completion-script `which griffc`)
-
+export DOTNET_ROOT="/usr/local/opt/dotnet/libexec"
 
 # added by travis gem
 [ ! -s /Users/yuya/.travis/travis.sh ] || source /Users/yuya/.travis/travis.sh
+
+# GraalVM
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home
+# export JAVA_TOOL_OPTIONS='-Duser.language=en'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/yuya/.sdkman"
+[[ -s "/Users/yuya/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yuya/.sdkman/bin/sdkman-init.sh"
+
+alias vim='nvim'
