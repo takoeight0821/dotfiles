@@ -1,9 +1,10 @@
 #!/bin/bash
 
-DOTPATH=~/dotfiles
+DOT_FILES=( .gitconfig .tmux.conf .vimrc .vim .zshrc)
 
-for f in .??*
+for file in ${DOT_FILES[@]}
 do
-    [ "$f" = ".git" ] && continue
-    ln -snfv "$DOTPATH"/"$f" "$HOME"/"$f"
+    ln -s $HOME/dotfiles/$file $HOME/$file
 done
+
+ln -s $HOME/dotfiles/nvim $HOME/.config/nvim

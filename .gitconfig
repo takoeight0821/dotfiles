@@ -12,6 +12,7 @@
 	email = takohati0821@gmail.com
 [pull]
 	rabase = false
+	ff = only
 [filter "media"]
 	required = true
 	clean = git media clean %f
@@ -71,3 +72,5 @@
 
 [init]
 	defaultBranch = main
+[merge]
+	ff = false

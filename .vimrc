@@ -60,6 +60,8 @@ if has('nvim')
   Plug 'neovim/nvim-lspconfig'
   Plug 'ojroques/nvim-lspfuzzy'
   Plug 'hrsh7th/nvim-compe'
+  Plug 'ray-x/lsp_signature.nvim'
+  Plug 'nvim-lua/lsp-status.nvim'
 else
   " vim-lsp
   Plug 'prabirshrestha/vim-lsp'
@@ -77,6 +79,13 @@ Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-fugitive'
 
 Plug 'hsanson/vim-android'
+
+if has('nvim')
+  Plug 'folke/zen-mode.nvim'
+endif
+
+" Haskell Formatting
+" Plug 'sdiehl/vim-ormolu'
 call plug#end()
 
 filetype plugin indent on
@@ -87,11 +96,12 @@ set ignorecase
 set smartcase
 
 set tabstop=2
+set softtabstop=2
 set shiftwidth=2
-set expandtab
 set autoindent
 set smarttab
 set smartindent
+set expandtab
 set nofixeol
 
 set backspace=2
@@ -112,10 +122,11 @@ set nobackup
 set noswapfile
 set autowriteall
 
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 let base16colorspace=256
-colorscheme base16-material
+" colorscheme base16-material
+colorscheme base16-onedark
 
 function! s:base16_customize() abort
   " call Base16hi("MatchParen", g:base16_gui05, g:base16_gui03, g:base16_cterm05, g:base16_cterm03, "bold,italic", "")
@@ -249,3 +260,6 @@ call s:source_rc('vim-trailing-whitespace.vim')
 if !has("nvim")
   call s:source_rc('vim-lsp.vim')
 endif
+
+" settings for go
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4

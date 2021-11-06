@@ -5,3 +5,5 @@ places
 snippets/
 .DS_Store
 .vimrc.local
+.vim/plugged
+.vim/.netrwhist
