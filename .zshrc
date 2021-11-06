@@ -13,7 +13,6 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "psprint/zsh-navigation-tools"
 zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
