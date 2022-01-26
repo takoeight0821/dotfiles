@@ -67,6 +67,7 @@
 [ghq]
   root = ~/go
   root = ~/dev/src
+  root = ~/Documents/novels
 [credential]
 	helper = osxkeychain
 
