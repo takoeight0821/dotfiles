@@ -3,8 +3,6 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 source ~/.vimrc
 
-set clipboard=unnamedplus
-set completeopt=menuone,noselect
 
 lua << EOF
 
@@ -55,7 +53,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'tsserver', 'gopls' --[['denols']] }
+local servers = { 'rust_analyzer', 'tsserver', 'gopls', 'elmls' --[['denols']] }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -155,3 +153,7 @@ endfunction
 
 set statusline+=%{LspStatus()}
 endif
+
+set clipboard=unnamedplus
+set completeopt=menuone,noselect
+

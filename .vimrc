@@ -73,12 +73,14 @@ endif
 Plug 'sheerun/vim-polyglot'
 Plug 'fnune/base16-vim'
 " Plug 'bronson/vim-trailing-whitespace'
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
 " vim-fugitive
 Plug 'tpope/vim-fugitive'
 
-Plug 'hsanson/vim-android'
+" Plug 'hsanson/vim-android'
+
+Plug 'machakann/vim-sandwich'
 
 if has('nvim')
   Plug 'folke/zen-mode.nvim'
@@ -127,6 +129,8 @@ set clipboard+=unnamedplus
 let base16colorspace=256
 " colorscheme base16-material
 colorscheme base16-onedark
+" colorscheme default
+set termguicolors
 
 function! s:base16_customize() abort
   " call Base16hi("MatchParen", g:base16_gui05, g:base16_gui03, g:base16_cterm05, g:base16_cterm03, "bold,italic", "")
@@ -139,11 +143,12 @@ function! s:base16_customize() abort
   call Base16hi("WarningHighlight", "", "", "", "", "underline", g:base16_gui09)
   call Base16hi("InfoHighlight",    "", "", "", "", "underline", g:base16_gui0D)
   call Base16hi("HintHighlight",    "", "", "", "", "underline", g:base16_gui0C)
+
 endfunction
 
 augroup on_change_colorschema
   autocmd!
-  autocmd ColorScheme * call s:base16_customize()
+  " autocmd ColorScheme * call s:base16_customize()
 augroup END
 
 set background=dark
