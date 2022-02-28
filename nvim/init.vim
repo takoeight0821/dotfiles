@@ -1,10 +1,12 @@
-if !exists('g:vscode')
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
+if !exists('g:vscode')
 source ~/.vimrc
 
 
 lua << EOF
+
+--[[
 
 ------------------
 -- lsp settings --
@@ -41,11 +43,11 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ac', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[g', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']g', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting_sync(nil, 1000)<CR>', opts)
 
   require "lsp_signature".on_attach()
   lsp_status.on_attach(client)
@@ -53,7 +55,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'tsserver', 'gopls', 'elmls' --[['denols']] }
+local servers = { 'rust_analyzer', 'tsserver', 'gopls', 'elmls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -136,24 +138,27 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap('i', '<cr>', 'compe#confirm("<cr>")', { expr = true })
 vim.api.nvim_set_keymap('i', '<c-space>', 'compe#complete()', { expr = true })
 
+--]]
+
 require("zen-mode").setup { }
 EOF
 
 " format command
-command! Format lua vim.lsp.buf.formatting_sync(nil, 1000)
+" command! Format lua vim.lsp.buf.formatting_sync(nil, 1000)
 
 " Statusline
-function! LspStatus() abort
-  if luaeval('#vim.lsp.buf_get_clients() > 0')
-    return luaeval("require('lsp-status').status()")
-  endif
+" function! LspStatus() abort
+"   if luaeval('#vim.lsp.buf_get_clients() > 0')
+"     return luaeval("require('lsp-status').status()")
+"   endif
+" 
+"   return ''
+" endfunction
 
-  return ''
-endfunction
-
-set statusline+=%{LspStatus()}
+" set statusline+=%{LspStatus()}
 endif
 
 set clipboard=unnamedplus
 set completeopt=menuone,noselect
 
+set termguicolors

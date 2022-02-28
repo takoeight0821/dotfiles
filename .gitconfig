@@ -66,8 +66,8 @@
   diffFilter = delta --color-only
 [ghq]
   root = ~/go
-  root = ~/dev/src
   root = ~/Documents/novels
+  root = ~/dev/src
 [credential]
 	helper = osxkeychain
 

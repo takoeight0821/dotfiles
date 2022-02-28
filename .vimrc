@@ -42,10 +42,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " coc.nvim
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " coc-fzf
-" Plug 'antoinemadec/coc-fzf'
+Plug 'antoinemadec/coc-fzf'
 
 " Defx
 if has('nvim')
@@ -56,19 +56,19 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-if has('nvim')
-  Plug 'neovim/nvim-lspconfig'
-  Plug 'ojroques/nvim-lspfuzzy'
-  Plug 'hrsh7th/nvim-compe'
-  Plug 'ray-x/lsp_signature.nvim'
-  Plug 'nvim-lua/lsp-status.nvim'
-else
-  " vim-lsp
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'mattn/vim-lsp-settings'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-endif
+" if has('nvim')
+"   Plug 'neovim/nvim-lspconfig'
+"   Plug 'ojroques/nvim-lspfuzzy'
+"   Plug 'hrsh7th/nvim-compe'
+"   Plug 'ray-x/lsp_signature.nvim'
+"   Plug 'nvim-lua/lsp-status.nvim'
+" else
+"   " vim-lsp
+"   Plug 'prabirshrestha/vim-lsp'
+"   Plug 'mattn/vim-lsp-settings'
+"   Plug 'prabirshrestha/asyncomplete.vim'
+"   Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" endif
 
 Plug 'sheerun/vim-polyglot'
 Plug 'fnune/base16-vim'
@@ -85,6 +85,10 @@ Plug 'machakann/vim-sandwich'
 if has('nvim')
   Plug 'folke/zen-mode.nvim'
 endif
+
+Plug 'vim-denops/denops.vim'
+Plug 'vim-denops/denops-helloworld.vim'
+Plug 'vim-skk/skkeleton'
 
 " Haskell Formatting
 " Plug 'sdiehl/vim-ormolu'
@@ -124,13 +128,12 @@ set nobackup
 set noswapfile
 set autowriteall
 
-set clipboard+=unnamedplus
+set clipboard^=unnamed,unnamedplus
 
 let base16colorspace=256
 " colorscheme base16-material
 colorscheme base16-onedark
 " colorscheme default
-set termguicolors
 
 function! s:base16_customize() abort
   " call Base16hi("MatchParen", g:base16_gui05, g:base16_gui03, g:base16_cterm05, g:base16_cterm03, "bold,italic", "")
@@ -253,7 +256,7 @@ let g:gradle_loclist_show = 0
 let g:gradle_show_signs = 0
 
 " coc.nvim
-" call s:source_rc('coc.nvim.vim')
+call s:source_rc('coc.nvim.vim')
 
 " Defx
 call s:source_rc('defx.vim')
@@ -262,9 +265,14 @@ call s:source_rc('defx.vim')
 call s:source_rc('vim-trailing-whitespace.vim')
 
 " vim-lsp
-if !has("nvim")
-  call s:source_rc('vim-lsp.vim')
-endif
+" if !has("nvim")
+"   call s:source_rc('vim-lsp.vim')
+" endif
 
 " settings for go
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+" skkeleton
+call skkeleton#config({ 'globalJisyo': '~/.skk/SKK-JISYO.L' })
+imap <C-j> <Plug>(skkeleton-enable)
+cmap <C-j> <Plug>(skkeleton-enable)
