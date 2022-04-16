@@ -41,11 +41,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" coc.nvim
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" coc-fzf
-Plug 'antoinemadec/coc-fzf'
+" " coc.nvim
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" 
+" " coc-fzf
+" Plug 'antoinemadec/coc-fzf'
 
 " Defx
 if has('nvim')
@@ -63,11 +63,11 @@ endif
 "   Plug 'ray-x/lsp_signature.nvim'
 "   Plug 'nvim-lua/lsp-status.nvim'
 " else
-"   " vim-lsp
-"   Plug 'prabirshrestha/vim-lsp'
-"   Plug 'mattn/vim-lsp-settings'
-"   Plug 'prabirshrestha/asyncomplete.vim'
-"   Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" vim-lsp
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " endif
 
 Plug 'sheerun/vim-polyglot'
@@ -256,7 +256,7 @@ let g:gradle_loclist_show = 0
 let g:gradle_show_signs = 0
 
 " coc.nvim
-call s:source_rc('coc.nvim.vim')
+" call s:source_rc('coc.nvim.vim')
 
 " Defx
 call s:source_rc('defx.vim')
@@ -266,7 +266,7 @@ call s:source_rc('vim-trailing-whitespace.vim')
 
 " vim-lsp
 " if !has("nvim")
-"   call s:source_rc('vim-lsp.vim')
+call s:source_rc('vim-lsp.vim')
 " endif
 
 " settings for go
