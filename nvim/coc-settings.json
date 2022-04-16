@@ -43,15 +43,13 @@
           }
         }
       }
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"]
     }
   },
   "tsserver.enableJavascript": true,
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact",
-    "typescript.tsx"
-  ],
   "codeLens.enable": true
 }
