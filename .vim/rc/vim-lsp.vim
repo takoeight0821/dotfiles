@@ -18,6 +18,8 @@ inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " vim-lsp
 let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_highlights_enabled = 0
+
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
@@ -37,7 +39,7 @@ function! s:on_lsp_buffer_enabled() abort
 
     " Remap keys for applying codeAction to the current buffer.
     nmap <leader>ac  <Plug>(lsp-code-action)
-    nmap <leader>le  <Plug>(lsp-code-lens)
+    nmap <leader>cl  <Plug>(lsp-code-lens)
     nmap <leader>gf :<c-u>call lsp#internal#document_formatting#format({ 'bufnr': bufnr('%') })<cr>
 
     let g:lsp_format_sync_timeout = 1000
@@ -51,15 +53,15 @@ augroup lsp_install
 augroup END
 
 " Haskell
-"if executable('haskell-language-server-wrapper')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'haskell-language-server-wrapper',
-"        \ 'cmd': {server_info->['haskell-language-server-wrapper', '--lsp']},
-"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(
-"        \     lsp#utils#find_nearest_parent_file_directory(
-"        \         lsp#utils#get_buffer_path(),
-"        \         ['.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml', '.git'],
-"        \     ))},
-"        \ 'whitelist': ['haskell', 'lhaskell'],
-"        \ })
-"endif
+if executable('haskell-language-server-wrapper')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'haskell-language-server-wrapper',
+        \ 'cmd': {server_info->['haskell-language-server-wrapper', '--lsp']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(
+        \     lsp#utils#find_nearest_parent_file_directory(
+        \         lsp#utils#get_buffer_path(),
+        \         ['.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml', '.git'],
+        \     ))},
+        \ 'whitelist': ['haskell', 'lhaskell'],
+        \ })
+endif
