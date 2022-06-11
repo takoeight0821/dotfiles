@@ -56,22 +56,24 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-" if has('nvim')
+if has('nvim')
 "   Plug 'neovim/nvim-lspconfig'
 "   Plug 'ojroques/nvim-lspfuzzy'
 "   Plug 'hrsh7th/nvim-compe'
 "   Plug 'ray-x/lsp_signature.nvim'
 "   Plug 'nvim-lua/lsp-status.nvim'
-" else
+  Plug 'github/copilot.vim'
+else
+endif
+
 " vim-lsp
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-" endif
-
 Plug 'sheerun/vim-polyglot'
 Plug 'fnune/base16-vim'
+
 " Plug 'bronson/vim-trailing-whitespace'
 " Plug 'wakatime/vim-wakatime'
 
@@ -92,6 +94,11 @@ Plug 'vim-skk/skkeleton'
 
 " Haskell Formatting
 " Plug 'sdiehl/vim-ormolu'
+
+Plug 'qnighy/satysfi.vim'
+
+Plug 'itchyny/lightline.vim'
+Plug 'halkn/lightline-lsp'
 call plug#end()
 
 filetype plugin indent on
@@ -276,3 +283,23 @@ autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 call skkeleton#config({ 'globalJisyo': '~/.skk/SKK-JISYO.L' })
 imap <C-j> <Plug>(skkeleton-enable)
 cmap <C-j> <Plug>(skkeleton-enable)
+
+" lightline.vim
+let g:lightline = {
+\ 'colorscheme': 'one',
+\ 'active': {
+\   'right': [ [ 'lsp_errors', 'lsp_warnings', 'lsp_ok', 'lineinfo' ],
+\              [ 'percent' ],
+\              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+\ },
+\ 'component_expand': {
+\   'lsp_warnings': 'lightline_lsp#warnings',
+\   'lsp_errors':   'lightline_lsp#errors',
+\   'lsp_ok':       'lightline_lsp#ok',
+\ },
+\ 'component_type': {
+\   'lsp_warnings': 'warning',
+\   'lsp_errors':   'error',
+\   'lsp_ok':       'middle',
+\ },
+\ }

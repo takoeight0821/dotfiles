@@ -162,3 +162,10 @@ set clipboard=unnamedplus
 set completeopt=menuone,noselect
 
 set termguicolors
+
+" :terminal change normal mode keybind
+:tnoremap <Esc> <C-\><C-n>
+" :T open terminal under current window
+command! -nargs=* T split | wincmd j | resize 20 | terminal <args>
+" インサートモードでスタート
+autocmd TermOpen * startinsert

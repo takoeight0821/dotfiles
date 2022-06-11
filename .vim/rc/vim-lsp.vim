@@ -1,3 +1,10 @@
+
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+
+" for asyncomplete.vim log
+let g:asyncomplete_log_file = expand('~/asyncomplete.log')
+
 " asyncomplete.vim
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -63,5 +70,19 @@ if executable('haskell-language-server-wrapper')
         \         ['.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml', '.git'],
         \     ))},
         \ 'whitelist': ['haskell', 'lhaskell'],
+        \ })
+endif
+
+" Malgo
+if executable('malgo')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'malgo',
+        \ 'cmd': {server_info->['malgo', 'lsp']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(
+        \     lsp#utils#find_nearest_parent_file_directory(
+        \         lsp#utils#get_buffer_path(),
+        \         ['.git'],
+        \     ))},
+        \ 'whitelist': ['malgo'],
         \ })
 endif
