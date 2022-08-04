@@ -18,13 +18,8 @@ let s:is_mac = !s:is_windows && !s:is_cygwin
       \    system('uname') =~? '^darwin'))
 let s:is_linux = !s:is_mac && has('unix')
 
-"if has('nvim')
-"    let g:vim_home = expand('~/.nvim')
-"    let g:rc_dir = expand('~/.nvim/rc')
-"else
-    let g:vim_home = expand('~/.vim')
-    let g:rc_dir = expand('~/.vim/rc')
-"endif
+let g:vim_home = expand('~/.vim')
+let g:rc_dir = expand('~/.vim/rc')
 
 " rcファイル読み込み関数
 " call s:source_rc('init.rc.vim')
@@ -41,12 +36,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" " coc.nvim
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" 
-" " coc-fzf
-" Plug 'antoinemadec/coc-fzf'
-
 " Defx
 if has('nvim')
   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -56,31 +45,28 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-if has('nvim')
-"   Plug 'neovim/nvim-lspconfig'
-"   Plug 'ojroques/nvim-lspfuzzy'
-"   Plug 'hrsh7th/nvim-compe'
-"   Plug 'ray-x/lsp_signature.nvim'
-"   Plug 'nvim-lua/lsp-status.nvim'
-  Plug 'github/copilot.vim'
-else
-endif
+Plug 'vim-denops/denops.vim'
+" ddc.vim
+Plug 'Shougo/ddc.vim'
+Plug 'Shougo/pum.vim'
+
+Plug 'Shougo/ddc-around'
+Plug 'shun/ddc-vim-lsp'
+
+Plug 'Shougo/ddc-matcher_head'
+Plug 'Shougo/ddc-sorter_rank'
 
 " vim-lsp
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
 Plug 'sheerun/vim-polyglot'
+
 Plug 'fnune/base16-vim'
 
-" Plug 'bronson/vim-trailing-whitespace'
-" Plug 'wakatime/vim-wakatime'
-
-" vim-fugitive
 Plug 'tpope/vim-fugitive'
-
-" Plug 'hsanson/vim-android'
 
 Plug 'machakann/vim-sandwich'
 
@@ -88,17 +74,14 @@ if has('nvim')
   Plug 'folke/zen-mode.nvim'
 endif
 
-Plug 'vim-denops/denops.vim'
-Plug 'vim-denops/denops-helloworld.vim'
 Plug 'vim-skk/skkeleton'
-
-" Haskell Formatting
-" Plug 'sdiehl/vim-ormolu'
 
 Plug 'qnighy/satysfi.vim'
 
 Plug 'itchyny/lightline.vim'
 Plug 'halkn/lightline-lsp'
+
+Plug 'kframework/k-editor-support', { 'rtp': 'vim' }
 call plug#end()
 
 filetype plugin indent on
@@ -270,6 +253,9 @@ call s:source_rc('defx.vim')
 
 " vim-trailing-whitespace
 call s:source_rc('vim-trailing-whitespace.vim')
+
+" ddc.vim
+call s:source_rc('ddc.vim')
 
 " vim-lsp
 " if !has("nvim")

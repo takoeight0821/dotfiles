@@ -67,6 +67,7 @@
 [ghq]
   root = ~/go
   root = ~/Documents/novels
+  root = "~/Google ドライブ/"
   root = ~/dev/src
 [credential]
 	helper = osxkeychain
