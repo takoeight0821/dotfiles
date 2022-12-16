@@ -3,7 +3,7 @@
 # Please adapt and uncomment the following lines:
   user = "Yuya Kono"
   email = "takohati0821@gmail.com"
-  editor = "vim"
+  editor = "nvim"
   pager = delta
   excludesfile = ~/.gitignore
 	autocrlf = input
@@ -67,7 +67,7 @@
 [ghq]
   root = ~/go
   root = ~/Documents/novels
-  root = "~/Google ドライブ/"
+  root = "~/Google Drive/My Drive/"
   root = ~/dev/src
 [credential]
 	helper = osxkeychain

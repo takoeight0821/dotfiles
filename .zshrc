@@ -42,7 +42,8 @@ path=(
     # /Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home/bin(N-/)
     $HOME/.rbenv/bin(N-/)
     # https://docs.haskellstack.org/en/stable/faq/#how-do-i-resolve-linker-errors-when-running-stack-setup-or-stack-build-on-macos
-    /usr/local/opt/llvm/bin(N-/)
+    # /usr/local/opt/llvm/bin(N-/)
+    /opt/homebrew/opt/llvm@12/bin(N-/)
     # /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/.yarn/bin(N-/)
     $HOME/bin(N-/)
@@ -106,11 +107,11 @@ alias la='ls -G -a'
 
 # test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/"
-[ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
+# # Base16 Shell
+# BASE16_SHELL="$HOME/.config/base16-shell/"
+# [ -n "$PS1" ] && \
+#     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+#         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
 function docker-setup() {
   eval "$(docker-machine env $1)"
@@ -134,7 +135,7 @@ export PGDATA=/usr/local/var/postgres
 function peco-src() {
     local src=$(ghq list --full-path | fzf --query "$LBUFFER")
     if [ -n "$src" ]; then
-        BUFFER="cd $src"
+        BUFFER="cd '$src'"
         zle accept-line
     fi
     zle -R -c
@@ -242,3 +243,12 @@ export SDKMAN_DIR="/Users/yuya/.sdkman"
 [[ -s "/Users/yuya/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/yuya/.sdkman/bin/sdkman-init.sh"
 
 alias vim='nvim'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/Users/yuya/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

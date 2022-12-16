@@ -59,12 +59,11 @@ Plug 'Shougo/ddc-sorter_rank'
 " vim-lsp
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'fnune/base16-vim'
+Plug 'chriskempson/base16-vim'
+Plug 'joshdick/onedark.vim'
 
 Plug 'tpope/vim-fugitive'
 
@@ -120,10 +119,11 @@ set autowriteall
 
 set clipboard^=unnamed,unnamedplus
 
-let base16colorspace=256
+" let base16colorspace=256
 " colorscheme base16-material
-colorscheme base16-onedark
+" colorscheme base16-onedark
 " colorscheme default
+colorscheme onedark
 
 function! s:base16_customize() abort
   " call Base16hi("MatchParen", g:base16_gui05, g:base16_gui03, g:base16_cterm05, g:base16_cterm03, "bold,italic", "")
