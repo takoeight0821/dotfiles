@@ -37,6 +37,8 @@ require('packer').startup(function(use)
     }
     
     use 'wakatime/vim-wakatime'
+
+    use 'github/copilot.vim'
 end)
 
 local builtin = require('telescope.builtin')

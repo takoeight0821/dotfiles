@@ -17,8 +17,8 @@ zplug "plugins/colored-man-pages", from:oh-my-zsh
 zplug "plugins/brew", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/cargo", from:oh-my-zsh
-# zplug "plugins/web-search", from:oh-my-zsh
 zplug "themes/robbyrussell", from:oh-my-zsh
+zplug "plugins/asdf", from:oh-my-zsh
 
 # check コマンドで未インストール項目があるかどうか verbose にチェックし
 # false のとき（つまり未インストール項目がある）y/N プロンプトで
@@ -43,7 +43,7 @@ path=(
     $HOME/.rbenv/bin(N-/)
     # https://docs.haskellstack.org/en/stable/faq/#how-do-i-resolve-linker-errors-when-running-stack-setup-or-stack-build-on-macos
     # /usr/local/opt/llvm/bin(N-/)
-    /opt/homebrew/opt/llvm@12/bin(N-/)
+    /opt/homebrew/opt/llvm@15/bin(N-/)
     # /usr/local/opt/llvm/share/llvm(N-/)
     $HOME/.yarn/bin(N-/)
     $HOME/bin(N-/)
@@ -248,13 +248,27 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# pnpm
-export PNPM_HOME="/Users/yuya/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
 # End Nix
+
+PATH="/Users/yuya/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/yuya/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/yuya/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/yuya/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/yuya/perl5"; export PERL_MM_OPT;
+
+
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+eval "$(direnv hook zsh)"
+
+if [ -x "`which aqua`" ]; then
+    path=( $path $(aqua root-dir)/bin )
+fi
+

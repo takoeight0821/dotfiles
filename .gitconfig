@@ -4,7 +4,7 @@
   user = "Yuya Kono"
   email = "takohati0821@gmail.com"
   editor = "nvim"
-  pager = delta
+#  pager = delta
   excludesfile = ~/.gitignore
 	autocrlf = input
 [user]
