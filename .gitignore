@@ -1,9 +1,0 @@
-ac-comphist.dat
-auto-save-list/
-elpa/
-places
-snippets/
-.DS_Store
-.vimrc.local
-.vim/plugged
-.vim/.netrwhist
