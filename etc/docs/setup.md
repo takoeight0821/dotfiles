@@ -5,4 +5,5 @@
 - Run `asdf install` to install all the tools
 
 TODO
-- add `. ~/.asdf/plugins/golang/set-env.zsh` to `.zshrc`
+- add .gitconfig
+- configure neovim with https://github.com/jdhao/nvim-config
