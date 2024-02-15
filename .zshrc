@@ -35,38 +35,6 @@ zplug load --verbose
 
 # eval $(cat $ZPLUG_HOME/repos/robbyrussell/oh-my-zsh/themes/robbyrussell.zsh-theme)
 
-typeset -U path PATH fpath
-
-# User configuration
-path=(
-    # /Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0/Contents/Home/bin(N-/)
-    $HOME/.rbenv/bin(N-/)
-    # https://docs.haskellstack.org/en/stable/faq/#how-do-i-resolve-linker-errors-when-running-stack-setup-or-stack-build-on-macos
-    # /usr/local/opt/llvm/bin(N-/)
-    /opt/homebrew/opt/llvm@15/bin(N-/)
-    # /usr/local/opt/llvm/share/llvm(N-/)
-    $HOME/.yarn/bin(N-/)
-    $HOME/bin(N-/)
-    $HOME/.composer/vendor/bin(N-/)
-    $HOME/.cabal/bin(N-/)
-    $HOME/.local/bin(N-/)
-    $HOME/.ghcup/bin(N-/)
-    $HOME/.roswell/bin(N-/)
-    $HOME/.cargo/bin(N-/)
-    /usr/local/smlnj/bin(N-/)
-    /Library/TeX/texbin(N-/)
-    /usr/local/bin(N-/)
-    /usr/local/sbin(N-/)
-    $path
-)
-
-fpath=($HOME/.zfunc $HOME/.zsh /usr/local/share/zsh/site-functions $ZPLUG_HOME/repos/zsh-users/zsh-completions $fpath)
-
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-
-complete -cf sudo
-
 HISTFILE=$HOME/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
@@ -272,3 +240,8 @@ if [ -x "`which aqua`" ]; then
     path=( $path $(aqua root-dir)/bin )
 fi
 
+
+# pnpm
+export PNPM_HOME="/Users/yuya/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

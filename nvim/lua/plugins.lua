@@ -38,7 +38,7 @@ require('packer').startup(function(use)
     
     use 'wakatime/vim-wakatime'
 
-    use 'github/copilot.vim'
+    -- use 'github/copilot.vim'
 end)
 
 local builtin = require('telescope.builtin')
@@ -46,7 +46,6 @@ vim.keymap.set('n', 'ff', builtin.find_files, {})
 vim.keymap.set('n', 'fg', builtin.live_grep, {})
 vim.keymap.set('n', 'fb', builtin.buffers, {})
 vim.keymap.set('n', 'fh', builtin.help_tags, {})
-
 
 local on_attach = function(client, bufnr)
     local bufopts = { noremap=true, silent=true, buffer=bufnr }  

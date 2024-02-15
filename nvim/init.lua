@@ -1,6 +1,10 @@
 if vim.g.vscode then
     -- VSCode extension
-else
+    -- https://github.com/vscode-neovim/vscode-neovim/issues/298
+    vim.opt.clipboard:append("unnamedplus")
+    return
+end
+
 vim.api.nvim_set_option('ignorecase', true)
 vim.api.nvim_set_option('smartcase', true)
 
@@ -23,8 +27,7 @@ vim.api.nvim_set_option('updatetime', 300)
 vim.api.nvim_set_keymap('', '<Space>', '', {})
 vim.g.mapleader = ' '
 
-require('plugins')
+-- require('plugins')
 
-vim.cmd.colorscheme('onedark')
+-- vim.cmd.colorscheme('onedark')
 vim.api.nvim_set_option('termguicolors', true)
-end

@@ -1,3 +1,4 @@
+if 
 set nocompatible
 
 " Skip initialization for vim-tiny or vim-small
