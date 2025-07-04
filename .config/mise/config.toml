@@ -1,0 +1,17 @@
+# mise configuration for dotfiles dependencies
+# This file installs all tools required by the zsh configuration
+
+[tools]
+delta = "0.18.2"
+direnv = "2.36.0"
+fzf = "0.63.0"
+ghq = "1.8.0"
+neovim = "0.10.4"
+node = "lts"
+pandoc = "3.7"
+ripgrep = "14.1.1"
+starship= "1.23.0"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = ["node"]

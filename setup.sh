@@ -221,6 +221,9 @@ install_dotfiles() {
     # Install .config/zsh
     create_symlink "${SCRIPT_DIR}/.config/zsh" "${CONFIG_DIR}/zsh"
 
+    # Install .config/mise
+    create_symlink "${SCRIPT_DIR}/.config/mise" "${CONFIG_DIR}/mise"
+
     # Copy local.zsh template if it doesn't exist
     local local_zsh="${CONFIG_DIR}/zsh/99-local.zsh"
     local local_template="${SCRIPT_DIR}/.config/zsh/99-local.zsh.example"
@@ -249,6 +252,7 @@ uninstall_dotfiles() {
     # Remove symlinks
     remove_symlink "${HOME}/.zshrc" "${SCRIPT_DIR}/.zshrc"
     remove_symlink "${CONFIG_DIR}/zsh" "${SCRIPT_DIR}/.config/zsh"
+    remove_symlink "${CONFIG_DIR}/mise" "${SCRIPT_DIR}/.config/mise"
 
     # Future: Remove more dotfiles here as they are added
     # remove_symlink "${HOME}/.gitconfig" "${SCRIPT_DIR}/.gitconfig"
