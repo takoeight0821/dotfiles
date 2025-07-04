@@ -19,7 +19,7 @@ readonly CONFIG_DIR="${HOME}/.config"
 
 # Options
 DRY_RUN=false
-FORCE=false
+FORCE=true
 UNINSTALL=false
 VERBOSE=false
 
@@ -50,7 +50,8 @@ Dotfiles setup script
 OPTIONS:
     -h, --help      Show this help message
     -d, --dry-run   Show what would be done without making changes
-    -f, --force     Force overwrite existing files without prompting
+    -f, --force     Force overwrite existing files without prompting (default)
+    --no-force      Prompt before overwriting existing files
     -u, --uninstall Remove symlinks created by this script
     -v, --verbose   Show verbose output
 
@@ -76,6 +77,10 @@ parse_options() {
                 ;;
             -f|--force)
                 FORCE=true
+                shift
+                ;;
+            --no-force)
+                FORCE=false
                 shift
                 ;;
             -u|--uninstall)

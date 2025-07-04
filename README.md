@@ -20,7 +20,7 @@ This repository contains a collection of dot files for various applications and 
 
 The setup script will:
 - Create symbolic links for all dotfiles
-- Backup any existing files before overwriting
+- Backup any existing files before overwriting (force mode is default)
 - Create a local configuration file from the template
 
 ### Setup Script Options
@@ -28,7 +28,8 @@ The setup script will:
 ```bash
 ./setup.sh --help      # Show help
 ./setup.sh --dry-run   # Preview changes without making them
-./setup.sh --force     # Skip confirmation prompts
+./setup.sh --force     # Skip confirmation prompts (default behavior)
+./setup.sh --no-force  # Prompt before overwriting existing files
 ./setup.sh --uninstall # Remove dotfile symlinks
 ```
 
