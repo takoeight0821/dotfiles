@@ -1,1 +1,0 @@
-/Users/yuya/dotfiles/.vim

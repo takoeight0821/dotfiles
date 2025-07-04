@@ -1,0 +1,22 @@
+# Local machine-specific configuration
+# Copy this file to local.zsh and customize for your machine
+
+# Example: Set custom editor
+# export EDITOR=code
+
+# Example: Add machine-specific paths
+# export PATH="/opt/local/bin:$PATH"
+
+# Example: Google Cloud SDK (adjust path as needed)
+# source /path/to/google-cloud-sdk/completion.zsh.inc
+
+# Example: Rancher Desktop
+# export PATH="$HOME/.rd/bin:$PATH"
+
+# Example: IntelliJ IDEA (macOS)
+# export PATH="/Applications/IntelliJ IDEA.app/Contents/MacOS:$PATH"
+
+# Example: Enable IDEA for fzf-code function
+# export USE_IDEA=true
+
+# Add any other machine-specific configurations below

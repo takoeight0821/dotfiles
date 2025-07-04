@@ -1,9 +1,12 @@
-ac-comphist.dat
-auto-save-list/
-elpa/
-places
-snippets/
+# Local machine-specific configuration
+.config/zsh/99-local.zsh
+
+# macOS
 .DS_Store
-.vimrc.local
-.vim/plugged
-.vim/.netrwhist
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+*~
