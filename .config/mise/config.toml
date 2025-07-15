@@ -6,11 +6,12 @@ delta = "0.18.2"
 direnv = "2.36.0"
 fzf = "0.63.0"
 ghq = "1.8.0"
-neovim = "0.10.4"
+neovim = "0.11.2"
 node = "lts"
 pandoc = "3.7"
 ripgrep = "14.1.1"
 starship= "1.23.0"
+tmux = "latest"
 
 [settings]
 experimental = true

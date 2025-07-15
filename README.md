@@ -2,6 +2,7 @@ This repository contains a collection of dot files for various applications and 
 
 - Zsh (with modular configuration)
 - Git
+- Neovim (with lazy.nvim plugin manager)
 
 ## Setup
 
@@ -82,5 +83,6 @@ The configuration includes optional support for:
 - [starship](https://starship.rs/) - Cross-shell prompt
 - [mise](https://mise.jdx.dev/) - Runtime version manager
 - [direnv](https://direnv.net/) - Environment variable manager
+- [Neovim](https://neovim.io/) - Hyperextensible Vim-based text editor
 
 Install these tools based on your needs for full functionality.
