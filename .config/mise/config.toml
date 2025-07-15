@@ -2,8 +2,10 @@
 # This file installs all tools required by the zsh configuration
 
 [tools]
+claude = "latest"
 delta = "0.18.2"
 direnv = "2.36.0"
+dotnet = "latest"
 fzf = "0.63.0"
 ghq = "1.8.0"
 neovim = "0.11.2"

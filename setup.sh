@@ -232,6 +232,9 @@ install_dotfiles() {
     # Install .config/nvim
     create_symlink "${SCRIPT_DIR}/.config/nvim" "${CONFIG_DIR}/nvim"
 
+    # Install .tmux.conf
+    create_symlink "${SCRIPT_DIR}/.tmux.conf" "${HOME}/.tmux.conf"
+
     # Copy local.zsh template if it doesn't exist
     local local_zsh="${CONFIG_DIR}/zsh/99-local.zsh"
     local local_template="${SCRIPT_DIR}/.config/zsh/99-local.zsh.example"
@@ -262,6 +265,7 @@ uninstall_dotfiles() {
     remove_symlink "${CONFIG_DIR}/zsh" "${SCRIPT_DIR}/.config/zsh"
     remove_symlink "${CONFIG_DIR}/mise" "${SCRIPT_DIR}/.config/mise"
     remove_symlink "${CONFIG_DIR}/nvim" "${SCRIPT_DIR}/.config/nvim"
+    remove_symlink "${HOME}/.tmux.conf" "${SCRIPT_DIR}/.tmux.conf"
 
     # Future: Remove more dotfiles here as they are added
     # remove_symlink "${HOME}/.gitconfig" "${SCRIPT_DIR}/.gitconfig"

@@ -183,6 +183,33 @@ return {
             },
           },
         },
+
+        fsautocomplete = {
+          -- F# language server
+          -- Install with: dotnet tool install -g fsautocomplete
+          cmd = { "fsautocomplete", "--adaptive-lsp-server-enabled" },
+          filetypes = { "fsharp", "fs", "fsx", "fsi" },
+          settings = {
+            FSharp = {
+              keywordsAutocomplete = true,
+              ExternalAutocomplete = false,
+              Linter = true,
+              UnionCaseStubGeneration = true,
+              UnionCaseStubGenerationBody = "failwith \"Not Implemented\"",
+              RecordStubGeneration = true,
+              RecordStubGenerationBody = "failwith \"Not Implemented\"",
+              InterfaceStubGeneration = true,
+              InterfaceStubGenerationObjectIdentifier = "this",
+              InterfaceStubGenerationMethodBody = "failwith \"Not Implemented\"",
+              UnusedOpensAnalyzer = true,
+              UnusedDeclarationsAnalyzer = true,
+              UseSdkScripts = true,
+              SimplifyNameAnalyzer = true,
+              ResolveNamespaces = true,
+              EnableReferenceCodeLens = true,
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
