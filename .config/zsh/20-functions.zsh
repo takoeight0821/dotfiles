@@ -84,7 +84,7 @@ function worktree() {
     fi
 
     # Create the worktree
-    if git worktree add "$worktree_path" "$branch_name" 2>/dev/null; then
+    if git worktree add -b "$branch_name" "$worktree_path"; then
         echo "Created worktree: $worktree_path"
         cd "$worktree_path"
     else
