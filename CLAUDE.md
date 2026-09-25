@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a dotfiles repository for managing personal development environment configurations. The repository uses symbolic links to deploy configurations while keeping all files in the git repository.
 
+This repository is superseded by [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) (`modules/dotfiles.nix`), which now manages the Zsh, Neovim, and tmux configuration, and is kept for history.
+
 ## Key Commands
 
 ### Setup and Installation
@@ -30,9 +32,10 @@ This is a dotfiles repository for managing personal development environment conf
 ### Working with the Repository
 
 ```bash
-# After making configuration changes
-git add .
-git commit -m "Update configuration"
+# After making configuration changes: stage the changed files by name and
+# write a Conventional Commits message
+git add .config/zsh/30-aliases.zsh
+git commit -m "feat(zsh): add git worktree aliases"
 git push
 
 # Apply changes after pulling updates
@@ -58,16 +61,14 @@ git push
   - `lua/plugins/lsp.lua`: LSP configuration
   - `lua/plugins/cmp.lua`: Autocompletion configuration
 - **`.config/mise/`**: Runtime version manager configuration
-- **`.claude/settings.local.json`**: Claude-specific permissions
+- **`.tmux.conf`**: tmux configuration
 
 ### Setup Script Architecture
 
 The `setup.sh` script:
 1. Creates `~/.dotfiles-backup/` with timestamp for existing file backups
-2. Iterates through all files/directories (excluding .git, README, setup.sh)
-3. Creates parent directories as needed
-4. Creates symbolic links from home directory to repository files
-5. Handles special cases like the local configuration template
+2. Symlinks five fixed targets: `~/.zshrc`, `~/.config/zsh`, `~/.config/mise`, `~/.config/nvim`, `~/.tmux.conf`
+3. Copies `99-local.zsh.example` to `99-local.zsh` if it does not exist
 
 ### Configuration Philosophy
 
@@ -78,7 +79,6 @@ The `setup.sh` script:
 
 ## Important Notes
 
-- Use `trash` command instead of `rm` for file deletion (per user's global CLAUDE.md)
 - Local machine-specific settings should go in `99-local.zsh` (not committed to git)
 - The repository assumes Zsh as the default shell
 - Tool configurations are loaded conditionally - missing tools won't cause errors
