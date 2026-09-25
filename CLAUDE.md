@@ -6,14 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a dotfiles repository for managing personal development environment configurations. The repository uses symbolic links to deploy configurations while keeping all files in the git repository.
 
-This repository is superseded by [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) (`modules/dotfiles.nix`), which now manages the Zsh, Neovim, and tmux configuration, and is kept for history.
+This repository is superseded by [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) and is kept for history. nix-config's `modules/dotfiles.nix` manages `~/.zshrc`, `~/.config/nvim`, and the tmux configuration as `~/.config/tmux` through Home Manager. It does not manage `~/.config/zsh` or `~/.config/mise`, which only this repository's `setup.sh` links.
+
+tmux loads every user configuration file that exists, in order: `~/.tmux.conf`, then `~/.config/tmux/tmux.conf`. A leftover `~/.tmux.conf` from this repository therefore still runs before nix-config's file; for any option both files set, the later `~/.config/tmux/tmux.conf` wins, and everything else from `~/.tmux.conf` (key bindings, plugins) stays in effect. Remove `~/.tmux.conf` on a machine managed by nix-config.
+
+**Do not run `setup.sh` on a machine managed by nix-config.** It runs in force mode by default and `rm -rf`s each existing target before linking, so it replaces the Home Manager–managed `~/.zshrc` and `~/.config/nvim`.
 
 ## Key Commands
 
 ### Setup and Installation
 
+These commands apply only to a machine that is not managed by nix-config (see the warning above).
+
 ```bash
-# Install dotfiles (creates symlinks, backs up existing files)
+# Install dotfiles (creates symlinks, backs up targets it replaces)
 ./setup.sh
 
 # Preview changes without making them
@@ -32,14 +38,11 @@ This repository is superseded by [takoeight0821/nix-config](https://github.com/t
 ### Working with the Repository
 
 ```bash
-# After making configuration changes: stage the changed files by name and
-# write a Conventional Commits message
-git add .config/zsh/30-aliases.zsh
-git commit -m "feat(zsh): add git worktree aliases"
+# The repository is historical: limit changes to fixes and documentation.
+# Stage the changed files by name and write a Conventional Commits message
+git add CLAUDE.md
+git commit -m "docs: correct the setup.sh backup behavior"
 git push
-
-# Apply changes after pulling updates
-./setup.sh
 ```
 
 ## Architecture
@@ -66,7 +69,7 @@ git push
 ### Setup Script Architecture
 
 The `setup.sh` script:
-1. Creates `~/.dotfiles-backup/` with timestamp for existing file backups
+1. Copies an existing target into `~/.dotfiles-backup/<timestamp>/` before replacing it (the directory is created only when a target is replaced)
 2. Symlinks five fixed targets: `~/.zshrc`, `~/.config/zsh`, `~/.config/mise`, `~/.config/nvim`, `~/.tmux.conf`
 3. Copies `99-local.zsh.example` to `99-local.zsh` if it does not exist
 
