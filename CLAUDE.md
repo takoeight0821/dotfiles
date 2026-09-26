@@ -6,12 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a dotfiles repository for managing personal development environment configurations. The repository uses symbolic links to deploy configurations while keeping all files in the git repository.
 
+This repository is superseded by [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) and is kept for history. nix-config's `modules/dotfiles.nix` links `~/.zshrc`, `~/.config/nvim`, and the tmux configuration as `~/.config/tmux` through Home Manager `home.file` entries, and its `seedMutableConfigs` activation (`tasks/seed-mutable-configs.rb`) links `~/.config/mise/config.toml`. Only `~/.config/zsh` has no nix-config counterpart; this repository's `setup.sh` is the only thing that links it.
+
+tmux loads every user configuration file that exists, in order: `~/.tmux.conf`, then `~/.config/tmux/tmux.conf`. A leftover `~/.tmux.conf` from this repository therefore still runs before nix-config's file; for any option both files set, the later `~/.config/tmux/tmux.conf` wins, and everything else from `~/.tmux.conf` (key bindings, plugins) stays in effect. Remove `~/.tmux.conf` on a machine managed by nix-config.
+
+**Do not run `setup.sh` on a machine managed by nix-config.** It runs in force mode by default and `rm -rf`s each existing target before linking, so it replaces the Home Manager–managed `~/.zshrc` and `~/.config/nvim`, and it backs up and removes the whole `~/.config/mise` directory, including the `config.toml` link that nix-config's activation created.
+
 ## Key Commands
 
 ### Setup and Installation
 
+These commands apply only to a machine that is not managed by nix-config (see the warning above).
+
 ```bash
-# Install dotfiles (creates symlinks, backs up existing files)
+# Install dotfiles (creates symlinks, backs up targets it replaces)
 ./setup.sh
 
 # Preview changes without making them
@@ -30,13 +38,11 @@ This is a dotfiles repository for managing personal development environment conf
 ### Working with the Repository
 
 ```bash
-# After making configuration changes
-git add .
-git commit -m "Update configuration"
+# The repository is historical: limit changes to fixes and documentation.
+# Stage the changed files by name and write a Conventional Commits message
+git add CLAUDE.md
+git commit -m "docs: correct the setup.sh backup behavior"
 git push
-
-# Apply changes after pulling updates
-./setup.sh
 ```
 
 ## Architecture
@@ -58,16 +64,14 @@ git push
   - `lua/plugins/lsp.lua`: LSP configuration
   - `lua/plugins/cmp.lua`: Autocompletion configuration
 - **`.config/mise/`**: Runtime version manager configuration
-- **`.claude/settings.local.json`**: Claude-specific permissions
+- **`.tmux.conf`**: tmux configuration
 
 ### Setup Script Architecture
 
 The `setup.sh` script:
-1. Creates `~/.dotfiles-backup/` with timestamp for existing file backups
-2. Iterates through all files/directories (excluding .git, README, setup.sh)
-3. Creates parent directories as needed
-4. Creates symbolic links from home directory to repository files
-5. Handles special cases like the local configuration template
+1. Copies an existing target into `~/.dotfiles-backup/<timestamp>/` before replacing it (the directory is created only when a target is replaced)
+2. Symlinks five fixed targets: `~/.zshrc`, `~/.config/zsh`, `~/.config/mise`, `~/.config/nvim`, `~/.tmux.conf`
+3. Copies `99-local.zsh.example` to `99-local.zsh` if it does not exist
 
 ### Configuration Philosophy
 
@@ -78,7 +82,6 @@ The `setup.sh` script:
 
 ## Important Notes
 
-- Use `trash` command instead of `rm` for file deletion (per user's global CLAUDE.md)
 - Local machine-specific settings should go in `99-local.zsh` (not committed to git)
 - The repository assumes Zsh as the default shell
 - Tool configurations are loaded conditionally - missing tools won't cause errors
