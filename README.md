@@ -1,4 +1,4 @@
-> **Superseded.** This repository is kept for history. [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) (`modules/dotfiles.nix`) now manages `~/.zshrc`, `~/.config/nvim`, and `~/.config/tmux` through Home Manager. Do not run `setup.sh` on a machine managed by nix-config: it replaces those files, and a leftover `~/.tmux.conf` still loads before `~/.config/tmux/tmux.conf`. See [CLAUDE.md](CLAUDE.md) for details.
+> **Superseded.** This repository is kept for history. [takoeight0821/nix-config](https://github.com/takoeight0821/nix-config) (`modules/dotfiles.nix`) now manages `~/.zshrc`, `~/.config/nvim`, and `~/.config/tmux` through Home Manager, and `~/.config/mise/config.toml` through its `seedMutableConfigs` activation. Do not run `setup.sh` on a machine managed by nix-config: it replaces those files, and a leftover `~/.tmux.conf` still loads before `~/.config/tmux/tmux.conf`. See [CLAUDE.md](CLAUDE.md) for details.
 
 This repository contains a collection of dot files for various applications and tools, including:
 
